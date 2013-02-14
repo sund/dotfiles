@@ -1,0 +1,150 @@
+VERBASH="2.5.1"
+
+## BASH COMPLETION in non-ubuntu versions
+# if not Ubuntu then setup completion
+## 
+# turns our ubuntu has HashKnownHosts in /etc/ssh/ssh_config set to on
+# breaks bash_completeion. Change to off and /etc/init.d/ssh reload
+# http://ubuntuforums.org/archive/index.php/t-834395.html
+# http://lists.debian.org/debian-devel/2005/07/msg00045.html
+# http://blog.zerodogg.org/2007/04/21/bash-ssh-host-completion/
+# man ssh-keygen
+##
+
+# Add `~/bin` to the `$PATH`
+export PATH="$HOME/bin:$PATH"
+
+# Load the shell dotfiles, and then some:
+# * ~/.path can be used to extend `$PATH`.
+# * ~/.extra can be used for other settings you don’t want to commit like private stuff.
+# * `/.local_profile old file that may still be around
+for file in ~/.{path,bash_prompt,exports,aliases,functions,extra,local_profile,gistaliases}; do
+	[ -r "$file" ] && source "$file"
+done
+unset file
+
+###
+## Detrmine the OS type
+#
+#
+OSNAME=`uname -s`
+
+case "$OSNAME" in
+    "Linux")
+        if [ -f ~/.linux ]
+        then
+            source ~/.linux
+        else
+            echo "No ~/.linux dotfile found."
+        fi
+        ;;
+    "Darwin")
+        if [ -f ~/.mac ]
+        then
+            source ~/.mac
+        else
+            echo "No ~/.mac dotfile found."
+        fi
+        ;;
+    "SunOS")
+        if [ -f ~/.solaris ]
+        then
+            source ~/.solaris
+        else
+            echo "No ~/.solaris dotfile found."
+        fi
+        ;;
+    *)
+        ;;
+esac
+
+#
+##
+###
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob
+
+# Append to the Bash history file, rather than overwriting it
+shopt -s histappend
+
+# Autocorrect typos in path names when using `cd`
+shopt -s cdspell
+
+# Enable some Bash 4 features when possible:
+# * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
+# * Recursive globbing, e.g. `echo **/*.txt`
+for option in autocd globstar; do
+	shopt -s "$option" 2> /dev/null
+done
+
+# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
+[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh sjsh ping
+
+if [ -f ~/.ssh/known_hosts ]
+then {
+            _complete_ssh_hosts ()
+            {
+            COMPREPLY=()
+            cur="${COMP_WORDS[COMP_CWORD]}"
+            comp_ssh_hosts=`if [ -f ~/.ssh/known_hosts ] ; then cat ~/.ssh/known_hosts | \
+                cut -f 1 -d ' ' | \
+                sed -e s/,.*//g | \
+                grep -v ^# | \
+                uniq | \
+                grep -v "\["
+                fi ;
+                if [ -f ~/.ssh/config ]; then
+                cat ~/.ssh/config | \
+                grep "^Host " | \
+                awk '{print $2}'
+                fi `
+            COMPREPLY=( $(compgen -W "${comp_ssh_hosts}" -- $cur))
+            return 0
+            }
+
+    complete -F _complete_ssh_hosts ssh
+    complete -F _complete_ssh_hosts sjsh
+    complete -F _complete_ssh_hosts sshroot
+    complete -F _complete_ssh_hosts scp
+    complete -F _complete_ssh_hosts sftp
+    complete -F _complete_ssh_hosts ping
+}
+else
+    {
+    echo "No 'known_hosts' file was found."
+    }
+fi
+
+# If possible, add tab completion for many more commands
+[ -f /etc/bash_completion ] && source /etc/bash_completion
+
+# determine the last commit and show it
+if [[ "$dotPath" == "" ]]
+then
+    findDotFiles
+fi
+
+gitVer="$(git --git-dir $dotPath/.git --work-tree=$dotPath log -n 1 | grep -m1 "commit [a-z0-9]" | awk '{print substr($2,1,7)  ".." substr($2,length($2)-6) }')"
+
+## Final line(s) of output
+# echo some info about this host
+if [ $MACHTYPE ]
+then
+	echo "Version: $VERBASH-$gitVer on a $MACHTYPE"
+else
+	if [ $HOSTTYPE ]
+	then
+		echo "Version: $VERBASH-$gitVer on a $HOSTTYPE"
+	else
+		echo "Version: $VERBASH-$gitVer"
+	fi
+fi
+
+## unset some of the large functions that won't be needed once processed
+
+#
+##
+### 
+##
+#
