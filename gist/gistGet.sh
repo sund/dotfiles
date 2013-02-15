@@ -4,8 +4,10 @@
 if [ -e rawFile.conf ]
 then
     source rawFile.conf
-else
+else {
+    echo "no rawFile.conf found"
     exit 1
+    }
 fi
 
 # if we haven't exited, then grab stuff
