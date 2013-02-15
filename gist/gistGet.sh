@@ -1,11 +1,11 @@
 #!/bin/bash
 # v .1
 
-if [ -e $dotPath/rawFile.conf ]
+if [ -e $dotPath/gist/rawFile.conf ]
 then
-    source $dotPath/rawFile.conf
+    source $dotPath/gist/rawFile.conf
 else {
-    echo "no $dotPath/rawFile.conf found"
+    echo "no $dotPath/gist/rawFile.conf found"
     exit 1
     }
 fi
