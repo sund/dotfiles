@@ -1,5 +1,5 @@
 #!/bin/bash
-# v .1
+# v .2
 
 OSNAME=`uname -s`
 cd "$(dirname "${BASH_SOURCE}")"
@@ -25,6 +25,9 @@ function vimrcCopy() {
    *)
         ;;
 esac
+
+# fix missing ~/.vim/backups
+if [ ! -f ~/.vim/backups ]; then mkdir -p ~/.vim/backups; fi
 }
 
 function updateRepo() {
