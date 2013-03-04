@@ -32,7 +32,13 @@ if [ ! -f ~/.vim/swaps ]; then mkdir -p ~/.vim/swaps; fi
 }
 
 function updateRepo() {
-    git pull
+    #on mac see if we have XCode installed and then use it
+    if [ -e /Applications/Xcode.app/ ]
+    then
+        xcrun git pull
+    else
+        git pull
+    fi
 }
 
 function getGist() {
