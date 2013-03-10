@@ -1,5 +1,5 @@
 #!/bin/bash
-# v .1
+# v .2
 
 if [ -e $dotPath/gist/rawFile.conf ]
 then
@@ -15,8 +15,8 @@ fi
 dotOut="$HOME/.gistaliases"
 
 ##
-CURLPATH=`which curl`
-WGETPATH=`which wget`
+CURLPATH=`command -v curl`
+WGETPATH=`command -v wget`
 
 if [ -e "$CURLPATH" ]
 then {
@@ -38,6 +38,13 @@ fi
 
 
 ##
-#curl $rawLink -o $HOME/$dotOut
 mv .gistaliases $dotOut
-chmod 755 $dotOut
+chmod 750 $dotOut
+
+# if we find a .gitconfig file, then copy it over
+if [ -e ".gitconfig" ]
+then
+	gitOut="$HOME/.gitconfig"
+	mv .gitconfig $gitOut
+	chmod 744 $gitOut
+fi
