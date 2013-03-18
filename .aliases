@@ -22,6 +22,7 @@ alias o="open"
 #alias oo="open ."
 alias x="exit"
 alias c="clear"
+alias niceit="nice -n -19"
 
 # ssh with user root
 alias sshroot="ssh -l root"
