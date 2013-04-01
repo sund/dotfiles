@@ -1,4 +1,4 @@
-# adds new types
+# adds new file types
 
 --type-set=apache=.conf
 --type-set=conf=.conf,.cnf

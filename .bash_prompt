@@ -78,22 +78,6 @@ function parse_git_branch() {
 export PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$PURPLE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\l \# \$ \[$RESET\]"
 export PS2="\[$ORANGE\]→ \[$RESET\]"
 
-###
-## My orginial for ref
-###
-
-# good PS1 info @ http://wiki.archlinux.org/index.php/Color_Bash_Prompt
-# and http://www.ibm.com/developerworks/linux/library/l-tip-prompt/
-# if Ubuntu don't process
-#if [ $OSNAME != "Ubuntu/Linux"  ] 
-#	then
-#	{		
-#		export SUDO_PS1='\[\e[41m\]\[\e[32m\]\u@\h\[\e[0m\]:\[\e[31m\]\w\[\e[0m\] [$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\] \n\l \# \[\e[1;31m\]\$\[\e[0;0m\] '
-#		export PS1='\[\e[32m\]\u@\h\[\e[0m\]:\[\e[31m\]\w\[\e[0m\]\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\l \# \$ '
-#       export PS1="\[${BOLD}${MAGENTA}\]\u@\h\[$WHITE\]:\w\[$MAGENTA\]\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\l \# \$ \[$RESET\]"
-#	}
-#fi
-
 # ANSI color codes
 #RS="\[\033[0m\]"    # reset
 #HC="\[\033[1m\]"    # hicolor
@@ -116,13 +100,6 @@ export PS2="\[$ORANGE\]→ \[$RESET\]"
 #BCYN="\[\033[46m\]" # background cyan
 #BWHT="\[\033[47m\]" # background white
 
-#if [ "$color_prompt" = yes ]; then
-#    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-#else
-#    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-#fi
-
-### more colors
 # Reset
 #Color_Off='\e[0m'       # Text Reset
 #

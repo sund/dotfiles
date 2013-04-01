@@ -1,4 +1,4 @@
-VERBASH="2.5.1"
+VERBASH="2.5.2"
 
 ## BASH COMPLETION in non-ubuntu versions
 # if not Ubuntu then setup completion
@@ -104,7 +104,6 @@ then {
             }
 
     complete -F _complete_ssh_hosts ssh
-    complete -F _complete_ssh_hosts sjsh
     complete -F _complete_ssh_hosts sshroot
     complete -F _complete_ssh_hosts scp
     complete -F _complete_ssh_hosts sftp

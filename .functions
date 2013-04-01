@@ -1,4 +1,4 @@
-#! dotfiles v.1
+#! dotfiles v.2
 ## Common functions
 
 # Simple calculator
@@ -165,15 +165,6 @@ if [ $? -eq 0 ]; then
 	}
 fi
 
-# Create a data URL from a file
-#function dataurl() {
-#	local mimeType=$(file -b --mime-type "$1")
-#	if [[ $mimeType == text/* ]]; then
-#		mimeType="${mimeType};charset=utf-8"
-#	fi
-#	echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
-#}
-
 # Start an HTTP server from a directory, optionally specifying the port
 function server() {
 	local port="${1:-8000}"
@@ -183,15 +174,6 @@ function server() {
 	python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 }
 
-# Start a PHP server from a directory, optionally specifying the port
-# (Requires PHP 5.4.0+.)
-#function phpserver() {
-#	local port="${1:-4000}"
-#	local ip=$(ipconfig getifaddr en1)
-#	sleep 1 && open "http://${ip}:${port}/" &
-#	php -S "${ip}:${port}"
-#}
-
 # Compare original and gzipped file size
 function gz() {
 	local origsize=$(wc -c < "$1")
@@ -200,22 +182,6 @@ function gz() {
 	printf "orig: %d bytes\n" "$origsize"
 	printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio"
 }
-
-# Test if HTTP compression (RFC 2616 + SDCH) is enabled for a given URL.
-# Send a fake UA string for sites that sniff it instead of using the Accept-Encoding header. (Looking at you, ajax.googleapis.com!)
-#function httpcompression() {
-#	encoding="$(curl -LIs -H 'User-Agent: Mozilla/5 Gecko' -H 'Accept-Encoding: gzip,deflate,compress,sdch' "$1" | grep '^Content-Encoding:')" && echo "$1 is encoded using ${encoding#* }" || echo "$1 is not using any encoding"
-#}
-
-# Syntax-highlight JSON strings or files
-# Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
-#function json() {
-#	if [ -t 0 ]; then # argument
-#		python -mjson.tool <<< "$*" | pygmentize -l javascript
-#	else # pipe
-#		python -mjson.tool | pygmentize -l javascript
-#	fi
-#}
 
 # All the dig info
 function digga() {
