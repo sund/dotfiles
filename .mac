@@ -1,4 +1,4 @@
-#! dotfiles
+#! dotfiles v.1
 # ~/.mac
 
 setupMac() {
@@ -16,7 +16,7 @@ setupMac() {
     # better ll for Mac
     alias ll="ls -laFG"
     # alias to rebuild launchservice DB 10.5 +
-    alias lsrebuild="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user; killall Finder;echo \"'Open With' has been rebuilt, Finder will relaunch.\""
+    alias lsrebuild="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user; killall Finder;echo 'Open With' has been rebuilt, Finder will relaunch."
     if [ -x /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport ]
     then {
         alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
@@ -102,11 +102,6 @@ setupMac() {
     # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
     alias stfu="osascript -e 'set volume output muted true'"
     alias pumpitup="osascript -e 'set volume 7'"
-        
-    # One of @janmoesen’s ProTip™s
-    #for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-    #	alias "$method"="lwp-request -m '$method'"
-    #done
     
     # Manually remove a downloaded app or file from the quarantine
     function unquarantine() {
@@ -114,47 +109,8 @@ setupMac() {
             xattr -r -d "$attribute" "$@"
         done
     }
-    
-    # Add reminder to Reminders.app (OS X 10.8)
-    # Usage: `remind 'foo'` or `echo 'foo' | remind`
-    function remind() {
-        local text
-        if [ -t 0 ]; then
-            text="$1" # argument
-        else
-            text=$(cat) # pipe
-        fi
-        osascript >/dev/null <<EOF
-    tell application "Reminders"
-        tell the default list
-            make new reminder with properties {name:"$text"}
-        end tell
-    end tell
-    EOF
-    }
-    
-    # Add note to Notes.app (OS X 10.8)
-    # Usage: `note 'foo'` or `echo 'foo' | note`
-    function note() {
-        local text
-        if [ -t 0 ]; then # argument
-            text="$1"
-        else # pipe
-            text=$(cat)
-        fi
-        body=$(echo "$text" | sed -E 's|$|<br>|g')
-        osascript >/dev/null <<EOF
-    tell application "Notes"
-        tell account "iCloud"
-            tell folder "Notes"
-                make new note with properties {name:"$text", body:"$body"}
-            end tell
-        end tell
-    end tell
-    EOF
-    }
 
-    }
+}
 
 ###
 ##
