@@ -1,5 +1,6 @@
 #! dotfiles
 # ~/.linux
+# v.3
 
 determineRelease() {
     #for linux only
@@ -47,7 +48,7 @@ setupCentOS() {
         lsbRelease=`lsb_release -is`
         echo "This is $lsbRelease!"
     fi
-    
+	
     commonLinux
 }
 
@@ -265,6 +266,9 @@ setupOriginalrc () {
     fi
     
 ## end contents of original .bashrc from Ubuntu
+
+# an alias for apt updateing
+alias aptitup="sudo apt-get update && sudo apt-get upgrade"
 
 }
 
