@@ -186,6 +186,10 @@ setupUbuntu () {
     
     setupOriginalrc
     unset setupOriginalrc
+
+# an alias for apt updateing¬
+alias aptitup="sudo apt-get update && sudo apt-get upgrade"
+
 }
 
 setupOriginalrc () {
