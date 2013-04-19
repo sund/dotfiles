@@ -55,26 +55,42 @@ function getGist() {
 
 pwd
 
-if ( updateRepo )
-then
-{
-    if [ "$1" == "--force" -o "$1" == "-f" ]; then
+case "$1" in
+	#if testing, just copy files in repo dir to ~/ without warning
+	"-t"|"--test")
+	    echo "TESTING: not pulling from repo."
         doIt
-        getGist
-    else
-        read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1
-        echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            doIt
-            getGist
-        fi
-    fi
+		getGist
+		vimrcCopy
+	;;
+	# no prompt for overwrite
+	"--force"|"-f")
+	if ( updateRepo )
+	then
+		doIt
+		getGist
+		vimrcCopy
+	fi
+	;;
+	# prompt for overwrite
+	*)
+	    read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1
+		echo
+		    if [[ $REPLY =~ ^[Yy]$ ]]; then
+	            if ( updateRepo )
+	            then
+	            	doIt
+	            	getGist
+	            	vimrcCopy
+	            fi
+		    fi
+	;;
+esac
 
-   vimrcCopy
+   
    unset doIt
    unset vimrcCopy
    unset getGist
    source ~/.bash_profile
 
-}
-fi
+
