@@ -28,7 +28,7 @@ then {
     then {
         echo "Found wget at "$WGETPATH"."
         echo "wgetting with "$WGETPATH"..."
-        $WGETPATH $rawLink | tar -xzv --strip-components 1
+        $WGETPATH $rawLink -O - | tar -xzv --strip-components 1
     }
     else
         echo "neither curl nor wget found."
