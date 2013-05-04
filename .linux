@@ -67,7 +67,7 @@ setupLinux() {
             setupUbuntu
             else
                 #if not CentOS or Ubuntu then check for redhat
-                if [ "$myDistro" == "Redhat" ] || [ "$myDistro" == "RedHatEnterpriseServer" ] || [ "$myDistro" == "RedHatEnterpriseAS" ] || [ "$myDistro" == "EnterpriseEnterpriseServer" ]
+                if [ "$myDistro" == "Redhat" ] || [ "$myDistro" == "RedHatEnterpriseServer" ] || [ "$myDistro" == "RedHatEnterpriseAS" ] || [ "$myDistro" == "EnterpriseEnterpriseServer" ] || [ "$myDistro" == "Fedora" ]
                 then
                     setupRedhat
                 else
