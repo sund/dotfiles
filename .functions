@@ -167,7 +167,7 @@ fi
 
 ## a function to find everything in ~ and git pull
 gitPullAll () {
-    local folderFound=("`find ~ ! -iwholename '*Library*' -name .git -type d -exec dirname {} \;`")
+    local folderFound=("`find ~ ! -iwholename '*.cache/shotwell*' ! -iwholename '*Library*' -name .git -type d -exec dirname {} \;`")
     declare -a folderArray
     folderArray=(${folderFound// / })
 
