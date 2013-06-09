@@ -6,7 +6,7 @@ cd "$(dirname "${BASH_SOURCE}")"
 
 function doIt() {
 # exclude .vimrc since it's a little distro dependant
-	rsync --exclude="Terminal" --exclude=".git/" --exclude="gist/" \
+	rsync --exclude="Terminal/" --exclude=".git/" --exclude="gist/" \
 	--exclude="init/" --exclude="info/" --exclude=".gitignore" \
 	--exclude=".gitattributes" --exclude=".DS_Store" --exclude="bootstrap.sh" \
 	--exclude=".vimrc*" --exclude=".solaris" --exclude="README.md" \
