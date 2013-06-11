@@ -109,6 +109,14 @@ setupMac() {
             xattr -r -d "$attribute" "$@"
         done
     }
+    function copyB64() {
+        # convert a file $1 to base64 
+        openssl enc -base64 -in $1 | tr -d '\n' | pbcopy
+        echo "base64 encoding copied to the clipboard"
+        # could also
+        # openssl enc -base64 -in path/to/my/image.png | tr -d '\n' | pbcopy
+        # perl -i.b64 -MMIME::Base64 -e 'undef $/;while(<>){print encode_base64($_);}' $1
+    }
 
 }
 
