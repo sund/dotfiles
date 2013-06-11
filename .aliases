@@ -7,8 +7,8 @@ alias .....="cd ../../../.."
 alias ~="cd ~" # `cd` is probably faster to type though
 
 # Shortcuts
-if [ -f ~/Documents/Dropbox ]; then alias d="cd ~/Documents/Dropbox"; fi
-if [ -f ~/Dropbox ]; then alias d="cd ~/Dropbox"; fi
+if [ -d ~/Documents/Dropbox ]; then alias d="cd ~/Documents/Dropbox"; fi
+if [ -d ~/Dropbox ]; then alias d="cd ~/Dropbox"; fi
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias g="git"
