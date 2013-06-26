@@ -1,6 +1,6 @@
 #! dotfiles
 # ~/.linux
-# v.3
+# v.4
 
 determineRelease() {
     #for linux only
@@ -192,6 +192,13 @@ alias aptitup="sudo apt-get update && sudo apt-get upgrade"
 alias install="sudo apt-get install"
 alias remove="sudo apt-get remove"
 alias search="apt-cache search"
+
+# make a ack alias to ack-grep if installed
+if [ `command -v ack-grep` ]
+then
+	alias ack="ack-grep "
+fi
+
 
 }
 
