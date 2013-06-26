@@ -1,4 +1,4 @@
-VERBASH="2.5.2"
+VERBASH="2.5.5"
 
 ## BASH COMPLETION in non-ubuntu versions
 # if not Ubuntu then setup completion
@@ -124,7 +124,7 @@ then
     findDotFiles
 fi
 
-gitVer="$(git --git-dir $dotPath/.git --work-tree=$dotPath log -n 1 | grep -m1 "commit [a-z0-9]" | awk '{print substr($2,1,7)  ".." substr($2,length($2)-6) }')"
+gitVer="$(git --git-dir $dotPath/.git --work-tree=$dotPath log -n 1 | grep -m1 "commit [a-z0-9]" | awk '{ print substr($2,1,7) }')"
 
 ## Final line(s) of output
 # echo some info about this host
