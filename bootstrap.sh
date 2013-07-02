@@ -1,17 +1,22 @@
 #!/bin/bash
-# v .2
+# v .3
+# bootstrap installs things.
 
-OSNAME=`uname -s`
+###
+## Variables
+#
+
+OSNAME=`uname -s` # for vimrcCopy
 cd "$(dirname "${BASH_SOURCE}")"
+DOTFILES_ROOT="`pwd`"
 
-function doIt() {
-# exclude .vimrc since it's a little distro dependant
-	rsync --exclude="Terminal/" --exclude=".git/" --exclude="gist/" \
-	--exclude="init/" --exclude="info/" --exclude=".gitignore" \
-	--exclude=".gitattributes" --exclude=".DS_Store" --exclude="bootstrap.sh" \
-	--exclude=".vimrc*" --exclude=".solaris" --exclude="README.md" \
-	--exclude=".*~" -av . ~
-}
+set -e
+
+echo ''
+
+### 
+## functions
+#
 
 function vimrcCopy() {
 
@@ -53,44 +58,118 @@ function getGist() {
     fi
 }
 
+info () {
+  printf "  [ \033[00;34m..\033[0m ] $1"
+}
+
+user () {
+  printf "\r  [ \033[0;33m?\033[0m ] $1 "
+}
+
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+fail () {
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit
+}
+
+link_files () {
+  ln -s $1 $2
+  success "linked $1 to $2"
+}
+
+install_dotfiles () {
+  info 'installing dotfiles'
+
+  overwrite_all=false
+  backup_all=false
+  skip_all=false
+
+  for source in `find $DOTFILES_ROOT -maxdepth 2 -name \*.symlink`
+  do
+    dest="$HOME/.`basename \"${source%.*}\"`"
+
+    if [ -f $dest ] || [ -d $dest ]
+    then
+
+      overwrite=false
+      backup=false
+      skip=false
+
+      if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
+      then
+        user "File already exists: `basename $source`.\nWhat do you want to do? [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
+        read -n 1 action
+
+        case "$action" in
+          o )
+            overwrite=true;;
+          O )
+            overwrite_all=true;;
+          b )
+            backup=true;;
+          B )
+            backup_all=true;;
+          s )
+            skip=true;;
+          S )
+            skip_all=true;;
+          * )
+            ;;
+        esac
+      fi
+
+      if [ "$overwrite" == "true" ] || [ "$overwrite_all" == "true" ]
+      then
+        rm -rf $dest
+        success "removed $dest"
+      fi
+
+      if [ "$backup" == "true" ] || [ "$backup_all" == "true" ]
+      then
+        mv $dest $dest\.backup
+        success "moved $dest to $dest.backup"
+      fi
+
+      if [ "$skip" == "false" ] && [ "$skip_all" == "false" ]
+      then
+        link_files $source $dest
+      else
+        success "skipped $source"
+      fi
+
+    else
+      link_files $source $dest
+    fi
+
+  done
+}
+
+###
+## Work
+#
+
 pwd
 
-case "$1" in
-	#if testing, just copy files in repo dir to ~/ without warning
-	"-t"|"--test")
-	    echo "TESTING: not pulling from repo."
-        doIt
-		getGist
-		vimrcCopy
-	;;
-	# no prompt for overwrite
-	"--force"|"-f")
-	if ( updateRepo )
-	then
-		doIt
-		getGist
-		vimrcCopy
-	fi
-	;;
-	# prompt for overwrite
-	*)
-	    read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1
-		echo
-		    if [[ $REPLY =~ ^[Yy]$ ]]; then
-	            if ( updateRepo )
-	            then
-	            	doIt
-	            	getGist
-	            	vimrcCopy
-	            fi
-		    fi
-	;;
-esac
+if ( updateRepo )
+then
+	vimrcCopy
+	install_dotfiles
+	getGist
+else
+	fail "Git pull."
+fi
 
-   
-   unset doIt
-   unset vimrcCopy
-   unset getGist
-   source ~/.bash_profile
+echo ''
+echo '  All installed!'
 
+###
+## unset things we don't need
+#
 
+unset vimrcCopy
+unset getGist
+source ~/.bash_profile
