@@ -1,5 +1,5 @@
 #!/bin/bash
-# v .3
+# v .4
 # bootstrap installs things.
 
 ###
@@ -8,8 +8,10 @@
 
 OSNAME=`uname -s` # for vimrcCopy
 cd "$(dirname "${BASH_SOURCE}")"
-DOTFILES_ROOT="`pwd`"
+echo "$(dirname "${BASH_SOURCE}")"
 
+DOTFILES_ROOT="`pwd`"
+echo $DOTFILES_ROOT
 set -e
 
 echo ''
@@ -82,13 +84,13 @@ link_files () {
 }
 
 install_dotfiles () {
-  info 'installing dotfiles'
+  info 'installing dotfiles\n'
 
   overwrite_all=false
   backup_all=false
   skip_all=false
 
-  for source in `find $DOTFILES_ROOT -maxdepth 2 -name \*.symlink`
+  for source in `find -L $DOTFILES_ROOT -maxdepth 2 -and -name \*.symlink -print`
   do
     dest="$HOME/.`basename \"${source%.*}\"`"
 
