@@ -1,10 +1,10 @@
-VERBASH="2.5.5"
+VERBASH="2.6"
 
 ## BASH COMPLETION in non-ubuntu versions
 # if not Ubuntu then setup completion
 ## 
-# turns our ubuntu has HashKnownHosts in /etc/ssh/ssh_config set to on
-# breaks bash_completeion. Change to off and /etc/init.d/ssh reload
+# Default ubuntu has HashKnownHosts set to yes in /etc/ssh/ssh_config
+# which breaks bash_completion. Change to off and /etc/init.d/ssh reload
 # http://ubuntuforums.org/archive/index.php/t-834395.html
 # http://lists.debian.org/debian-devel/2005/07/msg00045.html
 # http://blog.zerodogg.org/2007/04/21/bash-ssh-host-completion/
