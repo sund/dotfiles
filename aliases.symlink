@@ -15,7 +15,7 @@ alias g="git"
 alias h="history"
 alias j="jobs"
 alias v="vim"
-alias o="open"
+alias o="open" ## better in Mac OS
 alias x="exit"
 alias c="clear"
 alias niceit="nice -n -19"
@@ -35,7 +35,7 @@ alias l="ls -l ${colorflag}"
 
 # List all files colorized in long format, including dot files
 alias la="ls -la ${colorflag}"
-alias ll="ls -la ${colorflag}"
+alias ll="ls -l ${colorflag}"
 
 # List only directories
 alias lsd='ls -l ${colorflag} | grep "^d"'
