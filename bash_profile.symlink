@@ -1,5 +1,3 @@
-#! dotfiles
-# v.2.6
 VERBASH="2.6"
 
 ## BASH COMPLETION in non-ubuntu versions
@@ -13,25 +11,8 @@ VERBASH="2.6"
 # man ssh-keygen
 ##
 
-# Get the aliases and functions
-if [ -f ~/.bashrc ]; then
- . ~/.bashrc
-fi
-
-unset USERNAME
-# fixes a error: (gnome-ssh-askpass:13072): Gtk-WARNING **: cannot open display:
-# for git pull, weird
-unset SSH_ASKPASS
-
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH"
-
-# if we have a ~/dotfiles/bin (eventually ~/.dotfiles) then add it to the path
-if [ -e ~/dotfiles/bin -a -r ~/dotfiles/bin ]
-then
-   PATH=~/dotfiles/bin:$PATH
-fi
-export PATH
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
