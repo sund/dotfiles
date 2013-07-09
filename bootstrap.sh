@@ -7,7 +7,7 @@
 #
 
 OSNAME=`uname -s` # for vimrcCopy
-
+cd "$(dirname "${BASH_SOURCE}")"
 DOTFILES_ROOT="`pwd`"
 set -e
 
