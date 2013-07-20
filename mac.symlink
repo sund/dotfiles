@@ -78,6 +78,10 @@ setupMac() {
     alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
     alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
     
+    # enable/disable AirDrop on all interfaces
+    alias allDrop="defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1"
+    alias noDrop="defaults write com.apple.NetworkBrowser BrowseAllInterfaces 0"
+    
     # Hide/show all desktop icons (useful when presenting)
     alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
     alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
