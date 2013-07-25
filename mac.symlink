@@ -36,7 +36,8 @@ setupMac() {
     if [ -x /Applications/Xcode.app/Contents/Developer/usr/bin ]
     then
     {
-        PATH=$PATH:/Applications/Xcode.app/Contents/Developer/usr/bin
+    	alias xgit="xcrun git" # alias xCode's git
+	    PATH=$PATH:/Applications/Xcode.app/Contents/Developer/usr/bin
     }
     fi
 
