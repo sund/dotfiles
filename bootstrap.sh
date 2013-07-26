@@ -87,7 +87,7 @@ install_dotfiles () {
   backup_all=false
   skip_all=false
 
-  for source in `find -L $DOTFILES_ROOT -maxdepth 2 -and -name \*.symlink -print`
+  for source in `find -L $DOTFILES_ROOT -maxdepth 2  -not \( -path *.AppleDouble* -prune \)  -name \*.symlink  -print`
   do
     dest="$HOME/.`basename \"${source%.*}\"`"
 
