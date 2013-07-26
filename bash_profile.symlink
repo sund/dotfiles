@@ -1,4 +1,4 @@
-VERBASH="2.6"
+VERBASH="2.7"
 
 ## BASH COMPLETION in non-ubuntu versions
 # if not Ubuntu then setup completion
@@ -22,6 +22,13 @@ for file in ~/.{path,bash_prompt,exports,aliases,functions,extra,local_profile,g
 	[ -r "$file" ] && source "$file"
 done
 unset file
+
+# if we have a ~/dotfiles/bin (eventually ~/.dotfiles) then add it to the path
+if [ -e $dotPath/bin -a -r $dotPath/bin ]
+then
+   PATH=~/dotfiles/bin:$PATH
+fi
+export PATH
 
 ###
 ## Detrmine the OS type
