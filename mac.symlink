@@ -52,6 +52,9 @@ setupMac() {
     # show the uptime if greater than 7 days
     checkUptime 7
     
+    ## flush local DNS
+    alias fDNS="sudo killall -HUP mDNSResponder"
+    
     # Add `killall` tab completion for common apps
     complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall
     
