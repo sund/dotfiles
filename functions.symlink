@@ -108,32 +108,32 @@ findDotFiles() {
 # find ~ -type d -maxdepth 3 -name dotfiles -print
 if [ -d $HOME/dotfiles ] || [ -h $HOME/dotfiles ]
 then
-{
-dotPath="$HOME/dotfiles"
-}
-else
-{
-if [ -d $HOME/Documents/dotfiles ]
-then
-{
-dotPath="$HOME/Documents/dotfiles"
-}
-else
-{
-if [ -d $HOME/Documents/Git/dotfiles ]
-then
-{
-dotPath="$HOME/Documents/Git/dotfiles"
-}
-else
-{
-echo "dotfiles directory not found."
-break
-}
-fi
-}	
-fi
-}
+	{
+	dotPath="$HOME/dotfiles"
+	}
+	else
+	{
+		if [ -d $HOME/Documents/dotfiles ]
+		then
+		{
+		dotPath="$HOME/Documents/dotfiles"
+		}
+		else
+		{
+			if [ -d $HOME/Documents/Git/dotfiles ]
+			then
+			{
+			dotPath="$HOME/Documents/Git/dotfiles"
+			}
+			else
+			{
+			echo "dotfiles directory not found."
+			break
+			}
+			fi
+		}	
+	fi
+	}
 fi
 
 export dotPath
