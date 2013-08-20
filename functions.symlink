@@ -185,6 +185,26 @@ gitPullAll () {
     cd
 }
 
+## a function to find everything in /usr/local/sbin and git pull
+gitPullAllsbin () {
+    local folderFound=("`find /usr/local/sbin -name .git -type d -exec dirname {} \;`")
+    declare -a folderArray
+    folderArray=(${folderFound// / })
+
+    echo "I found ${#folderArray[*]} git repos."
+    
+    # pull the dirs
+    echo "===" 
+    for i in ${folderArray[@]}; do
+        echo $i
+        cd $i
+        git pull --all
+    done
+    
+    # return to the home dir until we get smarter to return from whence we came
+    cd
+}
+
 # Start an HTTP server from a directory, optionally specifying the port
 function server() {
 	local port="${1:-8000}"
