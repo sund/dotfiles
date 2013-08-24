@@ -40,6 +40,7 @@ fi
 ##
 mv .gistaliases $dotOut
 chmod 750 $dotOut
+source $dotOut
 
 # if we find a .gitconfig file, then copy it over
 if [ -e ".gitconfig" ]
