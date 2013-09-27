@@ -1,5 +1,5 @@
 #!/bin/bash
-# v .4
+# v .5
 # bootstrap installs things.
 
 ###
@@ -16,23 +16,6 @@ echo ''
 ### 
 ## functions
 #
-
-function vimrcCopy() {
-
- case "$OSNAME" in
-    "Linux")
-	cp .vimrc_linux ~/.vimrc
-    if [ -f ~/.mac ]; then rm -f ~/.mac; fi
-	if [ -f ~/.solaris ]; then rm -f ~/.solaris; fi
-        ;;
-    "Darwin")
-	cp .vimrc_mac ~/.vimrc
-    if [ -f ~/.linux ]; then rm -f ~/.linux; fi
-    if [ -f ~/.solaris ]; then rm -f ~/.solaris; fi
-        ;;
-   *)
-        ;;
-esac
 
 # fix missing ~/.vim/backups & ~/.vim/swaps
 if [ ! -f ~/.vim/backups ]; then mkdir -p ~/.vim/backups; fi
