@@ -137,7 +137,6 @@ pwd
 
 if ( updateRepo )
 then
-	vimrcCopy
 	install_dotfiles
 	getGist
 else
@@ -151,6 +150,5 @@ echo '  All installed!'
 ## unset things we don't need
 #
 
-unset vimrcCopy
 unset getGist
 source ~/.bash_profile
