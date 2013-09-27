@@ -167,9 +167,6 @@ set modelines=4
 set exrc
 set secure
 
-" Enable syntax highlighting
-syntax on
-
 " Highlight current line
 set cursorline
 
