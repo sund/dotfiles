@@ -20,7 +20,6 @@ echo ''
 # fix missing ~/.vim/backups & ~/.vim/swaps
 if [ ! -f ~/.vim/backups ]; then mkdir -p ~/.vim/backups; fi
 if [ ! -f ~/.vim/swaps ]; then mkdir -p ~/.vim/swaps; fi
-}
 
 function updateRepo() {
     #on mac see if we have XCode installed and then use it
