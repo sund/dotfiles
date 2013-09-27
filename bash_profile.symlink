@@ -1,4 +1,4 @@
-VERBASH="2.7"
+VERBASH="2.7a"
 
 ## BASH COMPLETION in non-ubuntu versions
 # if not Ubuntu then setup completion

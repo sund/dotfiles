@@ -1,0 +1,169 @@
+#! dotfiles v.2
+# ~/.mac
+
+setupMac() {
+    echo "Setting up environment for $OSNAME"
+    # can't remember why this is needed
+    export CLICOLOR="yes"
+    # set wget as alias for curl
+    alias wget="curl -O"
+    # top on Darwin to sort by CPU
+    alias top="top -ocpu"
+    # flush DNS cache
+    #alias flushdns="sudo killall -HUP mDNSResponder"
+    # perfect alias for netstat
+    alias inetstat="netstat -aW -f inet"
+    # better ll for Mac
+    alias ll="ls -laFG"
+    # alias to rebuild launchservice DB 10.5 +
+    alias lsrebuild="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user; killall Finder;echo 'Open With' has been rebuilt, Finder will relaunch."
+    if [ -x /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport ]
+    then {
+        alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
+        alias rejoin="sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport prefs joinmode=automatic joinmodefallback=keeplooking"
+    }
+    fi
+    if [ -x /Library/Preferences/SystemConfiguration/com.apple.airport.preferences ]
+    then
+        alias rememberdWiFi="defaults read /Library/Preferences/SystemConfiguration/com.apple.airport.preferences RememberedNetworks | egrep -o '(SSID_STR|_timeStamp).+' | sed 's/^.*= \(.*\);$/\1/' | sed 's/^"\(.*\)"$/\1/' | sed 's/\([0-9]\{4\}-..-..\).*/\1/"
+    fi
+    # find out if we have 32-bit EFI or 64
+    if [ -x /usr/sbin/ioreg ]
+    then
+        echo "Firmware is "`/usr/sbin/ioreg -l -p IODeviceTree | grep firmware-abi | awk '{ print $5 }' | sed 's/<//g' | sed 's/>//g' | sed 's/"//g'`"."
+    fi
+    ## if Xcode installed, add bin to path
+    if [ -x /Applications/Xcode.app/Contents/Developer/usr/bin ]
+    then
+    {
+    	alias xgit="xcrun git" # alias xCode's git
+	    PATH=$PATH:/Applications/Xcode.app/Contents/Developer/usr/bin
+    }
+    fi
+
+    # add to path if we are MAC OS X server
+    if [ -x /System/Library/ServerSetup/ServerInfo ]
+    then
+    {
+        PATH="$PATH:/System/Library/ServerSetup"
+        echo "This is a: "`ServerInfo -cpuDesc`
+    }
+    fi
+    # show the uptime if greater than 7 days
+    checkUptime 7
+    
+    ## flush local DNS
+    alias fDNS="sudo killall -HUP mDNSResponder"
+    
+    # Add `killall` tab completion for common apps
+    complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall
+    
+    # Add tab completion for `defaults read|write NSGlobalDomain`
+    # You could just use `-g` instead, but I like being explicit
+    complete -W "NSGlobalDomain" defaults
+        
+    # Flush Directory Service cache
+    alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+    
+    # OS X has no `md5sum`, so use `md5` as a fallback
+    command -v md5sum > /dev/null || alias md5sum="md5"
+    
+    # OS X has no `sha1sum`, so use `shasum` as a fallback
+    command -v sha1sum > /dev/null || alias sha1sum="shasum"
+        
+    # Recursively delete `.DS_Store` files
+    alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+    
+    # Empty the Trash on all mounted volumes and the main HDD
+    # Also, clear Apple’s System Logs to improve shell startup speed
+    alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
+    
+    # Show/hide hidden files in Finder
+    alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+    alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+    
+    # enable/disable AirDrop on all interfaces
+    alias allDrop="defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1"
+    alias noDrop="defaults write com.apple.NetworkBrowser BrowseAllInterfaces 0"
+    
+    # Hide/show all desktop icons (useful when presenting)
+    alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+    alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+    
+    # URL-encode strings
+    alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+    
+    # Merge PDF files
+    # Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
+    alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
+    
+    # PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
+    alias plistbuddy="/usr/libexec/PlistBuddy"
+    
+    # Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
+    # (useful when executing time-consuming commands)
+    alias badge="tput bel"
+    
+    # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
+    alias stfu="osascript -e 'set volume output muted true'"
+    alias pumpitup="osascript -e 'set volume 7'"
+    
+    # Manually remove a downloaded app or file from the quarantine
+    function unquarantine() {
+        for attribute in com.apple.metadata:kMDItemDownloadedDate com.apple.metadata:kMDItemWhereFroms com.apple.quarantine; do
+            xattr -r -d "$attribute" "$@"
+        done
+    }
+    function copyB64() {
+        # convert a file $1 to base64 
+        openssl enc -base64 -in $1 | tr -d '\n' | pbcopy
+        echo "base64 encoding copied to the clipboard"
+        # could also
+        # openssl enc -base64 -in path/to/my/image.png | tr -d '\n' | pbcopy
+        # perl -i.b64 -MMIME::Base64 -e 'undef $/;while(<>){print encode_base64($_);}' $1
+    }
+
+}
+
+appify() {
+# adapted from gist 
+if [ "$1" = "-h" -o "$1" = "--help" -o -z "$1" ]; then cat <<EOF
+appify v3.0.1 for Mac OS X - http://mths.be/appify
+Creates the simplest possible Mac app from a shell script.
+
+Appify takes a shell script as its first argument:
+
+    `basename "$0"` my-script.sh
+
+Note that you cannot rename appified apps. If you want to give your app
+a custom name, use the second argument:
+
+    `basename "$0"` my-script.sh "My App"
+
+Copyright (c) Thomas Aylott <http://subtlegradient.com/>
+Modified by Mathias Bynens <http://mathiasbynens.be/>
+EOF
+exit; fi
+
+APPNAME=${2:-$(basename "$1" ".sh")}
+DIR="$APPNAME.app/Contents/MacOS"
+
+if [ -a "$APPNAME.app" ]; then
+	echo "$PWD/$APPNAME.app already exists :("
+	exit 1
+fi
+
+mkdir -p "$DIR"
+cp "$1" "$DIR/$APPNAME"
+chmod +x "$DIR/$APPNAME"
+
+echo "$PWD/$APPNAME.app"
+}
+
+###
+##
+#
+
+setupMac
+
+unset setupMac
