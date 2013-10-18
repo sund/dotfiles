@@ -176,13 +176,15 @@ gitPullAll () {
     # pull the dirs
     echo "===" 
     for i in ${folderArray[@]}; do
-        echo $i
+        printf "\r\033[2K  [ \033[00;35mUpdating:\033[0m ] $i\n"
         cd $i
-        if (git pull --all)
+        git pull --all
+        if [ $? -eq 0 ]
         then
-            printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1 Updated Successfully!"
+            printf "\r\033[2K  [ \033[00;32mOK\033[0m ] Updated Successfully!\n"
         else
-            printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1 Failed to update!!\n"
+            printf "\r\033[2K  [\033[0;31mFAIL\033[0m] Failed to update!!\n"
+            echo ''
         fi
     done
     
@@ -201,13 +203,15 @@ gitPullAllsbin () {
     # pull the dirs
     echo "===" 
     for i in ${folderArray[@]}; do
-        echo $i
+        printf "\r\033[2K  [ \033[00;35mUpdating:\033[0m ] $i\n"
         cd $i
-        if (git pull --all)
+        git pull --all
+        if [ $? -eq 0 ]
         then
-            printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1 Updated Successfully!"
+            printf "\r\033[2K  [ \033[00;32mOK\033[0m ] Updated Successfully!\n"
         else
-            printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1 Failed to update!!\n"
+            printf "\r\033[2K  [\033[0;31mFAIL\033[0m] Failed to update!!\n"
+            echo ''
         fi
     done
     
