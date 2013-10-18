@@ -178,7 +178,12 @@ gitPullAll () {
     for i in ${folderArray[@]}; do
         echo $i
         cd $i
-        git pull --all
+        if (git pull --all)
+        then
+            printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1 Updated Successfully!"
+        else
+            printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1 Failed to update!!\n"
+        fi
     done
     
     # return to the home dir until we get smarter to return from whence we came
@@ -198,7 +203,12 @@ gitPullAllsbin () {
     for i in ${folderArray[@]}; do
         echo $i
         cd $i
-        git pull --all
+        if (git pull --all)
+        then
+            printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1 Updated Successfully!"
+        else
+            printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1 Failed to update!!\n"
+        fi
     done
     
     # return to the home dir until we get smarter to return from whence we came
