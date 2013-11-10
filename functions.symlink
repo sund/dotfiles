@@ -160,7 +160,7 @@ git --git-dir $dotPath/.git --work-tree=$dotPath ls-remote origin -h refs/heads/
 # Use Git’s colored diff when available
 hash git &>/dev/null
 if [ $? -eq 0 ]; then
-	function diff() {
+	function gdiff() {
 		git diff --no-index --color-words "$@"
 	}
 fi
