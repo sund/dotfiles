@@ -1,5 +1,5 @@
 #!/bin/bash
-# v .2
+# v .3
 
 if [ -e $dotPath/gist/rawFile.conf ]
 then
@@ -12,7 +12,7 @@ fi
 
 # if we haven't exited, then grab stuff
 
-dotOut="$HOME/.gistaliases"
+dotOut="$dotPath/gistaliases.symlink"
 
 ##
 CURLPATH=`command -v curl`
@@ -45,7 +45,7 @@ source $dotOut
 # if we find a .gitconfig file, then copy it over
 if [ -e ".gitconfig" ]
 then
-	gitOut="$HOME/.gitconfig"
+	gitOut="$dotPath/gitconfig.symlink"
 	mv .gitconfig $gitOut
 	chmod 744 $gitOut
 fi

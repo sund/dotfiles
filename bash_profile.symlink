@@ -1,4 +1,4 @@
-VERBASH="2.7a"
+VERBASH="2.8"
 
 ## BASH COMPLETION in non-ubuntu versions
 # if not Ubuntu then setup completion
@@ -18,7 +18,7 @@ export PATH="$HOME/bin:$PATH"
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit like private stuff.
 # * `/.local_profile old file that may still be around
-for file in ~/.{path,bash_prompt,exports,aliases,functions,extra,local_profile,gistaliases}; do
+for file in ~/.{path,bash_prompt,exports,aliases,functions,extra,local_profile,gitconfig,gistaliases}; do
 	[ -r "$file" ] && source "$file"
 done
 unset file
