@@ -22,3 +22,5 @@ CVS
 
 # Custom conf file for gist
 gist/rawFile.conf
+gitconfig.symlink
+gistaliases.symlink
