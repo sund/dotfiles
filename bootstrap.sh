@@ -137,8 +137,8 @@ pwd
 
 if ( updateRepo )
 then
-	install_dotfiles
 	getGist
+	install_dotfiles
 else
 	fail "Git pull."
 fi
