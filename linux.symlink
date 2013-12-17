@@ -62,7 +62,7 @@ setupLinux() {
         setupCentOS
     else
     # are we Ubuntu?
-        if [ "$myDistro" == "Ubuntu" ]
+        if [ "$myDistro" == "Ubuntu" ] || [ "$myDistro" == "elementary OS" ]
         then
             setupUbuntu
             else
