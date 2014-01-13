@@ -104,39 +104,17 @@ checkUptime() {
 }
 
 findDotFiles() {
-# maybe better to use find?
-# find ~ -type d -maxdepth 3 -name dotfiles -print
-if [ -d $HOME/dotfiles ] || [ -h $HOME/dotfiles ]
+#http://content.hccfl.edu/pollock/Unix/FindCmd.htm
+# find ~ -maxdepth 5 -name "*dotfiles" | sort -f -u -d -r | head -1
+if dotPath="`find ~ -maxdepth 5 -iregex '^.*dotfiles' | sort -f -u -d -r | head -1`" 
 then
-	{
-	dotPath="$HOME/dotfiles"
-	}
-	else
-	{
-		if [ -d $HOME/Documents/dotfiles ]
-		then
-		{
-		dotPath="$HOME/Documents/dotfiles"
-		}
-		else
-		{
-			if [ -d $HOME/Documents/Git/dotfiles ]
-			then
-			{
-			dotPath="$HOME/Documents/Git/dotfiles"
-			}
-			else
-			{
-			echo "dotfiles directory not found."
-			break
-			}
-			fi
-		}	
-	fi
-	}
+#   echo $dotPath
+    export dotPath
+else
+    echo "Failed to find dotPath"
+    return 1
 fi
 
-export dotPath
 }
 
 updatedotfiles() {
