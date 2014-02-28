@@ -68,7 +68,9 @@ export RESET
 # See below for more colors
 
 function parse_git_dirty() {
-	[[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]] && echo "*"
+  result=$(git status 2> /dev/null | tail -n1)
+  ( [[ "$result" != *"working directory clean"* ]] && [[ "$result" == *"fatal: This operation must be run in a work tree"* ]] ) && echo "*"
+  unset result
 }
 
 function parse_git_branch() {
