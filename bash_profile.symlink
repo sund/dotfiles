@@ -134,7 +134,7 @@ fi
 gitVer="$(git --git-dir $dotPath/.git --work-tree=$dotPath log -n 1 | grep -m1 "commit [a-z0-9]" | awk '{ print substr($2,1,7) }')"
 
 # override VERBASH if we can determine a tag
-gitTag="$(git --git-dir $dotPath/.git --work-tree=$dotPath tag)"
+gitTag="$(git --git-dir $dotPath/.git --work-tree=$dotPath describe --tags)"
 if [[ $gitTag ]]
 then
 	VERBASH=$gitTag
