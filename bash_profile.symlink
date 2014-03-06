@@ -1,4 +1,4 @@
-VERBASH="v2.9.0"
+VERBASH="v3.0.0"
 
 ## BASH COMPLETION in non-ubuntu versions
 # if not Ubuntu then setup completion
