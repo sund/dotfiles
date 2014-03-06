@@ -1,4 +1,4 @@
-VERBASH="2.8"
+VERBASH="v2.9.0"
 
 ## BASH COMPLETION in non-ubuntu versions
 # if not Ubuntu then setup completion
@@ -132,6 +132,14 @@ then
 fi
 
 gitVer="$(git --git-dir $dotPath/.git --work-tree=$dotPath log -n 1 | grep -m1 "commit [a-z0-9]" | awk '{ print substr($2,1,7) }')"
+
+# override VERBASH if we can determine a tag
+gitTag="$(git --git-dir $dotPath/.git --work-tree=$dotPath tag)"
+if [[ $gitTag ]]
+then
+	VERBASH=$gitTag
+	export VERBASH
+fi
 
 ## Final line(s) of output
 # echo some info about this host
