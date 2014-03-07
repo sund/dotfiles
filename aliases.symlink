@@ -52,8 +52,8 @@ alias sudo='sudo '
 # Gzip-enabled `curl`
 alias gurl="curl --compressed"
 
-# IP addresses
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+# report my IP (also other domains after
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 # Enhanced WHOIS lookups
 alias whois="whois -h whois-servers.net"
