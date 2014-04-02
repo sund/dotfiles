@@ -125,6 +125,15 @@ setupMac() {
 
 }
 
+## if rbenv (RVM replacement) then activate
+if command -v rbenv > /dev/null
+ then
+    eval "$(rbenv init -)"
+    echo "rbenv initialized."
+fi
+
+
+
 appify() {
 # adapted from gist 
 if [ "$1" = "-h" -o "$1" = "--help" -o -z "$1" ]; then cat <<EOF
