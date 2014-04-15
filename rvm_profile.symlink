@@ -1,0 +1,13 @@
+## extra profile for rvm settings
+# an update to rvm may re-add vars to bash_profile and bashrc
+
+# Load RVM into a shell session *as a function*
+
+if [[ -s "$HOME/.rvm/scripts/rvm" ]]
+then
+source "$HOME/.rvm/scripts/rvm"
+# Add RVM to PATH for scripting
+#PATH=$HOME/.rvm/bin:$PATH
+echo -n "rvm enabled: "
+ruby -v
+fi

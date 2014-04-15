@@ -1,4 +1,4 @@
-VERBASH="v3.1.0"
+VERBASH="v3.1.1"
 
 ## BASH COMPLETION in non-ubuntu versions
 # if not Ubuntu then setup completion
@@ -18,7 +18,7 @@ export PATH="$HOME/bin:$PATH"
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit like private stuff.
 # * `/.local_profile old file that may still be around
-for file in ~/.{path,bash_prompt,exports,aliases,functions,extra,local_profile,gistaliases}; do
+for file in ~/.{path,bash_prompt,exports,aliases,functions,extra,local_profile,gistaliases,rvm_profile}; do
 	[ -r "$file" ] && source "$file"
 done
 unset file
@@ -26,7 +26,7 @@ unset file
 # if we have a ~/dotfiles/bin (eventually ~/.dotfiles) then add it to the path
 if [ -e $dotPath/bin -a -r $dotPath/bin ]
 then
-   PATH=~/dotfiles/bin:$PATH
+   PATH=$PATH:~/dotfiles/bin
 fi
 export PATH
 
