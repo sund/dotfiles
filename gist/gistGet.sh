@@ -42,10 +42,19 @@ mv .gistaliases $dotOut
 chmod 750 $dotOut
 source $dotOut
 
-# if we find a .gitconfig file, then copy it over
+# if we find a .gitconfig file, then move
+# so it can be symlinked
 if [ -e ".gitconfig" ]
 then
 	gitOut="$dotPath/gitconfig.symlink"
 	mv .gitconfig $gitOut
+	chmod 744 $gitOut
+fi
+
+# if we find a sshconfig file, then move it over
+if [ -e "sshconfig" ]
+then
+	gitOut="$HOME/.ssh/config"
+	mv sshconfig $gitOut
 	chmod 744 $gitOut
 fi
