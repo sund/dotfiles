@@ -61,6 +61,15 @@ set hlsearch
 "------------------------------------------------------------
 " Usability options
 
+" Highlight 81st
+" http://is.gd/IBV2013
+call matchadd('ColorColumn', '\%81v', 100)
+
+" Make tabs, trailing whitespace, and non-breaking spaces visible
+" http://is.gd/IBV2013
+exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+set list
+
 " These are options that users frequently set in their .vimrc. Some of them
 " change Vim's behaviour in ways which deviate from the true Vi way, but
 " which are considered to add usability. Which, if any, of these options to
@@ -174,8 +183,8 @@ set cursorline
 set tabstop=2
 
 " Show “invisible” characters
-set lcs=tab:▸\ ,trail:·,nbsp:_
-set list
+"set lcs=tab:▸\ ,trail:·,nbsp:_
+"set list
 
 "------------------------------------------------------------
 " Mappings
