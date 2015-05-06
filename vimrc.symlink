@@ -56,7 +56,7 @@ augroup END
 
 " Highlight 81st
 " http://is.gd/IBV2013
-call matchadd('ColorColumn', '\%81v', 100)
+#call matchadd('ColorColumn', '\%81v', 100)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 04. Vim UI                                                                 "
