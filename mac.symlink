@@ -125,6 +125,19 @@ setupMac() {
 
 }
 
+#Is home brew installed?
+if command -v brew > /dev/null
+ then
+    echo -e -n "\xF0\x9F\x8D\xBA" " "
+fi
+
+## if rbenv (RVM replacement) then activate
+if command -v rbenv > /dev/null
+ then
+    eval "$(rbenv init -)"
+    echo "rbenv initialized."
+fi
+
 appify() {
 # adapted from gist 
 if [ "$1" = "-h" -o "$1" = "--help" -o -z "$1" ]; then cat <<EOF
