@@ -13,6 +13,7 @@ determineRelease() {
         myRelease="`lsb_release -rs`"
         myAllLSB="`lsb_release -a 2> /dev/null `"
         myLSBRelDist="`lsb_release -s -d`"
+        myCodeName="`lsb_release -cs`"
     else if [ -f /etc/redhat-release ]
         then
             myDistro="`cat /etc/redhat-release | awk '{print $1}'`"
@@ -27,6 +28,7 @@ determineRelease() {
             myDistro="Unknown Disro"
             myRelease="Unknown Release"
             myAllLSB="Unknown Distro"
+            myCodeName="Unknown Codename"
         fi
     fi
 }
@@ -62,7 +64,7 @@ setupLinux() {
         setupCentOS
     else
     # are we Ubuntu?
-        if [ "$myDistro" == "Ubuntu" ] || [ "$myDistro" == "elementary OS" ]
+        if [ "$myDistro" == "Ubuntu" ] || [ "$myDistro" == "elementary OS" ] || [ "$myDistro" == "Kali" ]
         then
             setupUbuntu
             else
